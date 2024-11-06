@@ -1,0 +1,33 @@
+[33mcommit 248fb5656358f2f477df11d875c0f9a89cdd226b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mremote-jake[m[33m, [m[1;31morigin/remote-jake[m[33m)[m
+Merge: ea1ddd1 7c72ae2
+Author: Bread <jmagri1@uncc.edu>
+Date:   Wed Nov 6 00:24:44 2024 -0500
+
+    Merge branch 'main' of github.com:jake-magri/Hipub into remote-jake
+
+[33mcommit ea1ddd15689c3a78257bf0436a6b92673662a31b[m
+Author: Bread <jmagri1@uncc.edu>
+Date:   Wed Nov 6 00:23:36 2024 -0500
+
+    Server can now take chatgpt prompts at /ask/ endpoint and return a json response to client
+
+[33mcommit 7c72ae2bdde66887edbaf2f6fdef999f9702c3f4[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 7ebba75 76f6c26
+Author: Brendan Murfield <bmurfield@gmail.com>
+Date:   Tue Nov 5 12:53:04 2024 -0600
+
+    Merge pull request #1 from jake-magri/remote-jake
+    
+    Added starting fullstack folder strucutre and boilerplate.
+
+[33mcommit 76f6c26b20c2f007ea300fa673be3a7dd5da2eb7[m
+Author: Bread <jmagri1@uncc.edu>
+Date:   Tue Nov 5 13:42:38 2024 -0500
+
+    Added starting fullstack folder strucutre and boilerplate.
+
+[33mcommit 7ebba7556efe30b45c19ea17801c37f3757cbefe[m[33m ([m[1;32mmain[m[33m)[m
+Author: Jake Magri <119074859+jake-magri@users.noreply.github.com>
+Date:   Tue Nov 5 13:34:24 2024 -0500
+
+    Initial commit
