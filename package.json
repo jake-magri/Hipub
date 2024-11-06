@@ -25,6 +25,8 @@
     "wait-on": "^7.2.0"
   },
   "dependencies": {
+    "axios": "^1.7.7",
+    "googleapis": "^144.0.0",
     "langchain": "^0.3.5"
   }
 }
