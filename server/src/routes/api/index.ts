@@ -8,5 +8,5 @@ const router = Router();
 router.use("/users", userRouter);
 // attach endpoints to router
 router.use("/ask", gptRouter);
-router.use("/api", placesRoutes);
+router.use("/places", placesRoutes);
 export default router;
