@@ -40,13 +40,13 @@ const promptFunc = async (input:string) => {
             return;
         }
         const answer = await promptFunc(userQuestion);
-        res.json({ question: userQuestion, response: answer });
+        return res.json({ question: userQuestion, response: answer });
     }
     catch (error) {
         if (error instanceof Error) {
             console.error('Error:', error.message);
         }
-        res.status(500).json({ question: userQuestion, response: 'Internal Server Error' });
+        return res.status(500).json({ question: userQuestion, response: 'Internal Server Error' });
     }
 };
 
