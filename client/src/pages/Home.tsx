@@ -6,6 +6,7 @@ import UserList from '../components/Users';
 import auth from '../utils/auth';
 import HomeImg from '../assets/Home.gif';
 
+
 const Home = () => {
     const [users, setUsers] = useState<UserData[]>([]);
     const [error, setError] = useState(false);
