@@ -36,7 +36,7 @@ const Login = () => {
   return (
     <div className='form-container'>
       <form className='form login-form' onSubmit={handleSubmit}>
-        <h1>Login</h1>
+        <h2>Login</h2>
         {/* Username input field */}
         <div className="form-group">
           <label>Username</label>
@@ -60,8 +60,8 @@ const Login = () => {
           />
         </div>
         {/* Submit button for the login form */}
-        <div className="form-group">
-          <button className="btn btn-primary" type='submit'>Login</button>
+        <div>
+          <button className="form-button" type='submit'>Login</button>
         </div>
       </form>
     </div>
