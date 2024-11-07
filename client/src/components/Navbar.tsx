@@ -8,7 +8,7 @@ const Navbar = () => {
   // Check login status once when component mounts
   useEffect(() => {
     const isLoggedIn = auth.loggedIn();
-    setLoginCheck(isLoggedIn); // Update state based on login status
+    setLoginCheck(!!isLoggedIn); // Update state based on login status
   }, []); // Empty dependency array ensures this runs only once
 
   return (

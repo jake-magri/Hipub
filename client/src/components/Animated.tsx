@@ -8,14 +8,14 @@ const animations = {
   transition: { duration: 0.5 }
 };
 
-const Animated = ({children}) => {
+const Animated = (props:{children: React.ReactNode}) => {
     return (
       <motion.div variants={animations} 
       initial='initial'
       animate='animate' 
       exit='exit'
       transition={ {duration: 1}}>
-        {children}
+        {props.children}
       </motion.div>
     )
   }
