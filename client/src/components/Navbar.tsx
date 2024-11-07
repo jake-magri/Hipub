@@ -3,47 +3,48 @@ import { Link } from 'react-router-dom';
 import auth from '../utils/auth';
 
 const Navbar = () => {
-  // State to track the login status
-  const [loginCheck, setLoginCheck] = useState(false);
+  const [loginCheck, setLoginCheck] = useState<boolean>(false);
 
-  // Function to check if the user is logged in using auth.loggedIn() method
-  const checkLogin = () => {
-    if (auth.loggedIn()) {
-      setLoginCheck(true);  // Set loginCheck to true if user is logged in
-    }
-  };
-
-  // useEffect hook to run checkLogin() on component mount and when loginCheck state changes
+  // Check login status once when component mounts
   useEffect(() => {
-    checkLogin();  // Call checkLogin() function to update loginCheck state
-  }, [loginCheck]);  // Dependency array ensures useEffect runs when loginCheck changes
+    const isLoggedIn = auth.loggedIn();
+    setLoginCheck(isLoggedIn); // Update state based on login status
+  }, []); // Empty dependency array ensures this runs only once
 
   return (
-    <>
-    <Link to='./signup'>Sign Up</Link>
-    <div className="display-flex justify-space-between align-center py-2 px-5 mint-green">
-      <h1>
-        Finn needs your information to let you in!
-      </h1>
-      <div>
-        {
-          // Conditional rendering based on loginCheck state
-          !loginCheck ? (
-            // Render login button if user is not logged in
-            <button className="btn" type='button'>
-              <Link to='/login'>Log In</Link>
+    <div>
+      <div className="button-container">
+        {/* Conditionally render buttons based on login status */}
+        {!loginCheck && (
+          <>
+            <button className="button">
+              <Link to='./'>Home</Link>
             </button>
-          ) : (
-            // Render logout button if user is logged in
-            <button className="btn" type='button' onClick={() => {
-              auth.logout();  // Call logout() method from auth utility on button click
-            }}>Logout</button>
-          )
-        }
+            <button className="button">
+              <Link to='./signup'>Sign Up</Link>
+            </button>
+          </>
+        )}
+        
+        {/* Only show Log In button if not logged in */}
+        {!loginCheck && (
+          <button className="button">
+            <Link to='/login'>Log In</Link>
+          </button>
+        )}
+
+        {/* Show Logout button when logged in */}
+        {loginCheck && (
+          <button className="button" onClick={() => { 
+            auth.logout(); 
+            setLoginCheck(false); // Update state on logout
+          }}>
+            Logout
+          </button>
+        )}
       </div>
     </div>
-    </>
-  )
+  );
 }
 
 export default Navbar;

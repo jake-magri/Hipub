@@ -1,81 +1,79 @@
-import { useState, useLayoutEffect, FormEvent, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
+import { retrieveUsers } from "../api/userAPI";
+import type { UserData } from "../interfaces/UserData";
 import ErrorPage from "./ErrorPage";
-import auth from "../utils/auth";
-import { askQuestion } from "../api/gptAPI";
+import UserList from '../components/Users';
+import auth from '../utils/auth';
+import HomeImg from '../assets/Home.gif';
 
 const Home = () => {
-  const [error, setError] = useState(false);
-  const [loginCheck, setLoginCheck] = useState(false);
-  const [prompt, setPrompt] = useState("");
-  const [response, setResponse] = useState('');
+    const [users, setUsers] = useState<UserData[]>([]);
+    const [error, setError] = useState(false);
+    const [loginCheck, setLoginCheck] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+    const [showSecondText, setShowSecondText] = useState(false);
 
-  useEffect(() => {
-    console.log('Updated response:', response);
-  }, [response]);
-  
+    useEffect(() => {
+        if (loginCheck) {
+            fetchUsers();
+        }
+    }, [loginCheck]);
 
-  useLayoutEffect(() => {
-    checkLogin();
-  }, []);
+    useLayoutEffect(() => {
+        checkLogin();
+    }, []);
 
-  const checkLogin = () => {
-    if (auth.loggedIn()) {
-      setLoginCheck(true);
+    const checkLogin = () => {
+        if (auth.loggedIn()) {
+            setLoginCheck(true);
+        }
+    };
+
+    const fetchUsers = async () => {
+        try {
+            const data = await retrieveUsers();
+            setUsers(data);
+        } catch (err) {
+            console.error('Failed to retrieve tickets:', err);
+            setError(true);
+        }
+    };
+
+    // Once the fade-in animation is complete, trigger the second paragraph to show
+    const handleAnimationEnd = () => {
+        setShowSecondText(true);
+    };
+
+    if (error) {
+        return <ErrorPage />;
     }
-  };
 
-  // Handle form submission for login
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    try {
-      const data = await askQuestion(prompt);
-      setResponse(data);
-      console.log(`client api response: ${JSON.stringify(data, null, 2)}`);
-    } catch (err) {
-      console.error("Failed to execute on line 48 home.tsx", err); // Log any errors that occur during login
-      setError(true);
-    }
-  };
+    useEffect(() => {
+        // Trigger the fade-in animation after the component mounts
+        setIsVisible(true);
+    }, []);
 
-  if (error) {
-    return <ErrorPage />;
-  }
-
-  return (
-    <>
-      {!loginCheck ? (
-        <div className="login-notice">
-          <h1>Login to view all your friends!</h1>
-        </div>
-      ) : (
-        <div className="form-container">
-          {/* Display area for the response */}
-          <textarea
-            className="response-box"
-            value={response}
-            readOnly
-            placeholder="Response will appear here..."
-            rows={10}
-            cols={50}
-          />
-
-          {/* Form to submit a new prompt */}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Enter your prompt:</label>
-              <input
-                type="text"
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Type your question here..."
-              />
-            </div>
-            <button type="submit">Submit</button>
-          </form>
-        </div>
-      )}
-    </>
-  );
+    return (
+        <>
+            {!loginCheck ? (
+                <div className="login-notice">
+                    <h1
+                        className={isVisible ? 'fade-in' : ''}
+                        onAnimationEnd={handleAnimationEnd} // Listen for when the animation ends
+                    >
+                        Log in to talk with Finn. He's been waiting...
+                    </h1>
+                    <img className="eye" src={HomeImg} />
+                    
+                    {showSecondText && (
+                        <p>This is the second message that appears after the first fade-in animation.</p>
+                    )}
+                </div>
+            ) : (
+                <UserList users={users} />
+            )}
+        </>
+    );
 };
 
 export default Home;
