@@ -1,5 +1,6 @@
 export interface UserData {
-  id: number | null;
+  id?: string; //
   username: string | null;
   email: string | null;
+  password: string | null; 
 }
