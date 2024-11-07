@@ -57,16 +57,16 @@ const Home = () => {
         <>
             {!loginCheck ? (
                 <div className="login-notice">
+                  <img className="eye" src={HomeImg} />
                     <h1
                         className={isVisible ? 'fade-in' : ''}
                         onAnimationEnd={handleAnimationEnd} // Listen for when the animation ends
                     >
-                        Log in to talk with Finn. He's been waiting...
+                        Log in to speak with Finn
                     </h1>
-                    <img className="eye" src={HomeImg} />
                     
                     {showSecondText && (
-                        <p>This is the second message that appears after the first fade-in animation.</p>
+                        <h3 className='fade-in'>He's been waiting</h3>
                     )}
                 </div>
             ) : (
