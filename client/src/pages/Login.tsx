@@ -1,4 +1,5 @@
 import { useState, FormEvent, ChangeEvent } from "react";
+import Animated from "../components/Animated"
 
 import Auth from '../utils/auth';  // Import the Auth utility for managing authentication state
 import { login } from "../api/authAPI";  // Import the login function from the API
@@ -34,37 +35,41 @@ const Login = () => {
   };
 
   return (
-    <div className='form-container'>
-      <form className='form login-form' onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        {/* Username input field */}
-        <div className="form-group">
-          <label>Username</label>
-          <input 
-            className="form-input"
-            type='text'
-            name='username'
-            value={loginData.username || ''}
-            onChange={handleChange}
-          />
-        </div>
-        {/* Password input field */}
-        <div className="form-group">
-          <label>Password</label>
-          <input 
-            className="form-input"
-            type='password'
-            name='password'
-            value={loginData.password || ''}
-            onChange={handleChange}
-          />
-        </div>
-        {/* Submit button for the login form */}
-        <div>
-          <button className="form-button" type='submit'>Login</button>
-        </div>
-      </form>
-    </div>
+    <>
+    <Animated>
+      <div className='form-container'>
+        <form className='form login-form' onSubmit={handleSubmit}>
+          <h2>Login</h2>
+          {/* Username input field */}
+          <div className="form-group">
+            <label>Username</label>
+            <input
+              className="form-input"
+              type='text'
+              name='username'
+              value={loginData.username || ''}
+              onChange={handleChange}
+            />
+          </div>
+          {/* Password input field */}
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              className="form-input"
+              type='password'
+              name='password'
+              value={loginData.password || ''}
+              onChange={handleChange}
+            />
+          </div>
+          {/* Submit button for the login form */}
+          <div>
+            <button className="form-button" type='submit'>Login</button>
+          </div>
+        </form>
+      </div>
+      </Animated>
+    </>
   )
 };
 
