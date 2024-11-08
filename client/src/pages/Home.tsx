@@ -3,7 +3,7 @@ import ErrorPage from "./ErrorPage";
 import auth from '../utils/auth';
 import HomeImg from '../assets/Home.gif';
 import { askQuestion } from "../api/gptAPI";
-
+import Places from "../components/Places";
 
 const Home = () => {
     const [error, setError] = useState(false);
@@ -93,8 +93,10 @@ const Home = () => {
                         </div>
                         <button type="submit">Submit</button>
                     </form>
+                    <Places/>
                 </div>
             )}
+           
         </>
     );
 };
