@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { searchPlacesHandler } from '../../controllers/places-controller.js';
+import express from 'express';
+import { getNearbyBars } from '../../controllers/places-controller.js'
 
-const router = Router();
+const router = express.Router();
 
-router.get('/search', searchPlacesHandler);
-
+// This is the nearby bars endpoint
+router.post('/nearby-bars', getNearbyBars);
 
 export {router as placesRoutes};
