@@ -2,6 +2,7 @@ import express from 'express';
 import { ChatOpenAI } from '@langchain/OpenAI';
 import dotenv from 'dotenv';
 dotenv.config();
+import {Input} from '../../models/index.js';
 
 // Get the OpenAI API key from the environment variables
 const apiKey = process.env.OPENAI_API_KEY;
@@ -39,6 +40,11 @@ const promptFunc = async (input:string) => {
             res.status(400).json({ question: null, response: 'Please provide a question in the request body.' });
             return;
         }
+
+        // store user input from the promp to Input Model and create new 
+        const saveInput = await Input.create({ input: userQuestion });
+        res.status(202).json(saveInput)
+
         const answer = await promptFunc(userQuestion);
         return res.json({ question: userQuestion, response: answer });
     }
@@ -48,6 +54,7 @@ const promptFunc = async (input:string) => {
         }
         return res.status(500).json({ question: userQuestion, response: 'Internal Server Error' });
     }
+
 };
 
 const router = express.Router();
