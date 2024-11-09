@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Handles the 
+
 export const getNearbyBars = async (req: Request, res: Response) => {
   const { latitude, longitude } = req.body;
   const radius = 5000; // radius is in meters so this is 5km from clients location.
@@ -15,7 +15,7 @@ export const getNearbyBars = async (req: Request, res: Response) => {
   }
 
   try {
-    const apiKey = process.env.GOOGLE_PLACES_API_KEY; // Store this in your .env file for security
+    const apiKey = process.env.GOOGLE_PLACES_API_KEY; 
     const response = await axios.get(
       `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=bar&key=${apiKey}`
     );

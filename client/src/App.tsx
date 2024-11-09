@@ -1,17 +1,19 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
-import Navbar from './components/Navbar';
+import Navbar from "./components/Navbar";
+import { SoundProvider } from "./components/SoundProvider";
 
 function App() {
-
   return (
-    <div>
-      <Navbar />
-      <main className='container pt-5'>
-        <Outlet />
-      </main>
-    </div>
-  )
+    <SoundProvider>
+      <div>
+        <Navbar />
+        <main className="container pt-5">
+          <Outlet />
+        </main>
+      </div>
+    </SoundProvider>
+  );
 }
 
-export default App
+export default App;
