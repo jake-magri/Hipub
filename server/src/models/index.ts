@@ -7,6 +7,6 @@ const User = UserFactory(sequelize);
 const Input = InputFactory(sequelize);
 
 User.hasMany(Input, { foreignKey: 'UserId'});
-Input.belongsTo(User, { foreignKey: 'assignedUser', as: 'UserInput'});
+Input.belongsTo(User, { foreignKey: 'UserId', as: 'assignedUser'});
 
 export { User, Input };

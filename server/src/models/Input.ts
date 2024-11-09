@@ -1,9 +1,11 @@
 
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
+import {User} from './user';
 
 interface InputAttributes {
     id: number;
     input: string;
+    UserId?: number;
 }
 
 interface InputCreationAttributes extends Optional<InputAttributes, 'id'> { }
@@ -12,9 +14,11 @@ interface InputCreationAttributes extends Optional<InputAttributes, 'id'> { }
 export class Input extends Model<InputAttributes, InputCreationAttributes> implements InputAttributes {
     public id!: number;
     public input!: string;
+    public UserId!: number;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
+    public readonly assignedUser?: User;
 
 }
 
@@ -29,6 +33,10 @@ export function InputFactory(sequelize: Sequelize): typeof Input {
             input: {
                 type: DataTypes.STRING,
                 allowNull: false
+            },
+            UserId: {
+                type: DataTypes.INTEGER,
+                allowNull: true
             }
         }, {
 
@@ -37,4 +45,5 @@ export function InputFactory(sequelize: Sequelize): typeof Input {
     }
     )
     return Input;
+    
 }
