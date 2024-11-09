@@ -41,6 +41,7 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       username: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
       },
       email: {
         type: DataTypes.STRING,
@@ -71,3 +72,25 @@ export function UserFactory(sequelize: Sequelize): typeof User {
 
   return User;  // Return the initialized User model
 }
+
+
+
+// import {username, message}
+
+// // GET user by username
+
+// export const getUserByUsername = async (username: string) => {
+//   try {
+//     const user = await User.findOne({
+//       where: { username }
+//     });
+
+//     if (user) {
+//       return user;
+//     } else {
+//       return console.log({ message: 'User not found' });
+//     }
+//   } catch (error: any) {
+//     return console.log({ message: error.message });
+//   }
+// }
