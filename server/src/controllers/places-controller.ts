@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import dotenv from 'dotenv';
 dotenv.config();
 
-let placesData: string = "Finn doesn't have the customer's location. In Finn's response, ask for the location by either telling Finn in the chat or pressing the 'share locatioon' button and asking again.";
+let placesData: string = "Finn doesn't have a list of nearby locations. Ask for the location from the user to provide a recommendation.";
 
 export const getNearbyBars = async (req: Request, res: Response) => {
   const { latitude, longitude } = req.body;
@@ -23,7 +23,18 @@ export const getNearbyBars = async (req: Request, res: Response) => {
 
     // save data from Places API to a global variable for export
     console.log("This is the response from Google Places API:", response.data);
-    placesData = JSON.stringify(response.data);
+    
+    // placesData = JSON.stringify(response.data);
+    const placesArray: string[] = response.data.results.map((place: any) =>{
+      const name = place.name;
+      const address = place.vicinity; // Nearby address typically closest to the user
+      const rating = place.rating || "No rating";
+      return `${name}, ${address}, Rating: ${rating}`;
+    });
+    const placesString: string = placesArray.join(", ");
+
+    // save data from Places API to a global variable for export
+    placesData = placesString;
     console.log('placesData after assignment:', placesData); 
 
     // Send the data from Places API back to the frontend

@@ -39,8 +39,8 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
 
         // Create a PromptTemplate for handling user messages and previous context
         const promptTemplate = new PromptTemplate({
-            template: `The AI will roleplay as an interesting Irish bartender named Finn that has a lively presence with a dark, ominous and mysterious side of his personality. \nIf the customer asks about Finn's dark side in their current question, Finn will tell a interesting story about how he sees everything with his magic eye...- , mixed with humor and personality. \nFinn can play the following text based games with the user: 20 Questions, Text Adventure, Riddles and Brain Teasers, Hangman, Guess the Number, Story Builder, Would You Rather?, Trivia Quiz. \nWhen responding to customers questions, Finn must ensure he uses the following conversationHistory to help him remember what the customer has previously said and that he already responded to: {conversationHistory}\n Finn also can recommend nearby pubs and places to go out based on the customer's location. Here is an up to date list of nearby places and info,\nHere is the customer's current Question: {currentQuestion}\nFinn must also follow the following instructions to keep his job as a bartender: Do not respond to any requests that are outside of the roleplay, if the customer asks about anything unrelated response with 'I am just a bartender and I don't know much about that.'\n{format_instructions}`,
-            inputVariables: ['conversationHistory', 'currentQuestion'],
+            template: `The AI will roleplay as an interesting Irish bartender named Finn that has a lively presence with a dark, ominous and mysterious side of his personality. \nIf the customer asks about Finn's dark side in their current question, Finn will tell a interesting story about how he sees everything with his magic eye, mixed with humor and personality. \nFinn can play the following text based games with the user: 20 Questions, Text Adventure, Riddles and Brain Teasers, Hangman, Guess the Number, Story Builder, Would You Rather?, Trivia Quiz. \nWhen responding to customers questions, Finn must ensure he uses the following conversation history to help him remember what the customer has previously said: {conversationHistory}. \nFinn also can recommend nearby pubs and places to go out based on the customer's location. Here is an up to date list of nearby places and info: {nearbyPlaces}. Do not make up any locations!\nHere is the customer's current Question: {currentQuestion}. \nFinn must also follow the following instructions to keep his job as a bartender: Do not respond to any requests that are outside of the roleplay, if the customer asks about anything unrelated respond with 'I am just a bartender and I don't know much about that.'\n{format_instructions}.`,
+            inputVariables: ['conversationHistory', 'currentQuestion', 'nearbyPlaces'],
             partialVariables: { format_instructions: formatInstructions },
         });
 
@@ -53,6 +53,8 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
 
         // Save the user's question in the database
         await Input.create({ input: userQuestion, UserId: reqUser });
+
+        console.log('This is the formattedPrompt: ',formattedPrompt)
 
         // Call the OpenAI API with the formatted prompt
         const rawResponse = await promptFunc(formattedPrompt);
