@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-// Define the interface for the JWT payload
-interface JwtPayload {
-  username: string
+// Define the interface for the JWT payload (now includes both username and user ID)
+export interface JwtPayload {
+  username: string;
+  user: number; // user ID should be a number (integer)
 }
 
 // Middleware function to authenticate JWT token
@@ -13,20 +14,22 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 
   // Check if the authorization header is present
   if (authHeader) {
-    // Extract the token from the authorization header
+    // Extract the token from the authorization header (Bearer token)
     const token = authHeader.split(' ')[1];
 
     // Get the secret key from the environment variables
     const secretKey = process.env.JWT_SECRET_KEY || '';
 
     // Verify the JWT token
-    jwt.verify(token, secretKey, (err, user) => {
+    jwt.verify(token, secretKey, (err, decodedToken) => {
       if (err) {
         return res.sendStatus(403); // Send forbidden status if the token is invalid
       }
 
-      // Attach the user information to the request object
-      req.user = user as JwtPayload;
+      // Attach the user information (decodedToken) to the request object
+      // Cast decodedToken as JwtPayload to ensure correct type
+      req.user = decodedToken as JwtPayload;
+
       return next(); // Call the next middleware function
     });
   } else {
