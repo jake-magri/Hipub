@@ -2,9 +2,12 @@ import { useState, useEffect, useLayoutEffect, FormEvent } from "react";
 import ErrorPage from "./ErrorPage";
 import auth from "../utils/auth";
 import HomeImg from "../assets/Home.gif";
+import chatBox from "../assets/chat-box.png";
 import { askQuestion } from "../api/gptAPI";
 import Places from "../components/Places";
 import { useSound } from "../components/SoundProvider";
+import Animated from "../components/Animated";
+import arrow from "../assets/arrow.gif";
 
 const Home = () => {
   const [error, setError] = useState(false);
@@ -74,36 +77,53 @@ const Home = () => {
           {showSecondText && <h3 className="fade-in">He's been waiting</h3>}
         </div>
       ) : (
-        <div className="form-container">
-          {/* Mute/Play button for the crowd sound */}
-          <button onClick={isPlaying ? pauseSound : playSound}>
-            {isPlaying ? "🔇" : "🔊"}
-          </button>
+        <Animated>
+          <div className="main-container">
+            <div >
+              <button className="sound" onClick={isPlaying ? pauseSound : playSound}>
+                {isPlaying ? "🔇" : "🔊"}
+              </button>
+              <Animated>
+                <img className="chat-box" src={chatBox} />
+                {/* Mute/Play button for the crowd sound */}
+                {/* Display area for the response */}
+                <textarea
+                  className="response-box"
+                  value={response}
+                  readOnly
+                  placeholder="Hey there… I'm Finn! Your virtual bartender... and I see everything...
+            
 
-          {/* Display area for the response */}
-          <textarea
-            className="response-box"
-            value={response}
-            readOnly
-            placeholder="Response will appear here..."
-            rows={10}
-            cols={30}
-          />
-          {/* Form to submit a new prompt */}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Enter your prompt:</label>
-              <input
-                type="text"
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Type your question here..."
-              />
+            So, what can I help you with?"
+                  rows={10}
+                  cols={30}
+                />
+              </Animated>
+              {/* Form to submit a new prompt */}
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <div className="prompt-box">
+                    <label>Enter your prompt:</label>
+                    <input
+                      className="styled-input"
+                      type="text"
+                      value={prompt}
+                      onChange={(e) => setPrompt(e.target.value)}
+                      placeholder="Type your question here..."
+                    />
+                  </div>
+                  <button className="submit-button" type="submit">Submit</button>
+                </div>
+              </form>
+              <div className="location-box">
+                <Places />
+              </div>
+              <div>
+                <img className="arrow" src={arrow}/>
+              </div>
             </div>
-            <button type="submit">Submit</button>
-          </form>
-          <Places />
-        </div>
+          </div>
+        </Animated>
       )}
     </>
   );

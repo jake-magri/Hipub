@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import auth from '../utils/auth';
 
+
 const Navbar = () => {
   const [loginCheck, setLoginCheck] = useState<boolean>(false);
 
@@ -35,11 +36,11 @@ const Navbar = () => {
 
         {/* Show Logout button when logged in */}
         {loginCheck && (
-          <button className="button" onClick={() => { 
+          <button className="exit" onClick={() => { 
             auth.logout(); 
             setLoginCheck(false); // Update state on logout
           }}>
-            Logout
+            Exit
           </button>
         )}
       </div>
