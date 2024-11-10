@@ -34,7 +34,8 @@ function getLocation (latitude:number, longitude:number){
 }
 
   return (
-    <button onClick={geolocation} className="form-button" type='submit'>
+    <button onClick={geolocation} type='submit'
+    className="location-design">
        Go on, scout out a proper place for a pint! 🍺
     </button>
   )

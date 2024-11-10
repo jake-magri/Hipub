@@ -18,6 +18,7 @@ const Navbar = () => {
         {/* Conditionally render buttons based on login status */}
         {!loginCheck && (
           <>
+          <img />
             <button className="button">
               <Link to='./'>Home</Link>
             </button>

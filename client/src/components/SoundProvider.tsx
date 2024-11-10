@@ -1,7 +1,8 @@
 import React, { useState, useRef, ReactNode, createContext, useContext } from 'react';
 
-// Import the audio file
+// Import the audio files
 import crowdNoise from '../../public/sounds/crowdnoise.mp3'; 
+import jazz from '../../public/sounds/jazz.mp3'; 
 
 // Create a context to manage sound
 interface SoundContextType {
@@ -19,29 +20,35 @@ interface SoundProviderProps {
 
 export const SoundProvider: React.FC<SoundProviderProps> = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const soundRef = useRef<HTMLAudioElement | null>(null);
+  const crowdNoiseRef = useRef<HTMLAudioElement | null>(null);
+  const jazzRef = useRef<HTMLAudioElement | null>(null);
 
-  // Function to play the sound
+  // Function to play both sounds
   const playSound = () => {
-    if (soundRef.current) {
-      soundRef.current.play();
+    if (crowdNoiseRef.current && jazzRef.current) {
+      crowdNoiseRef.current.play();
+      jazzRef.current.play();
       setIsPlaying(true);
     }
   };
 
-  // Function to pause the sound
+  // Function to pause both sounds
   const pauseSound = () => {
-    if (soundRef.current) {
-      soundRef.current.pause();
+    if (crowdNoiseRef.current && jazzRef.current) {
+      crowdNoiseRef.current.pause();
+      jazzRef.current.pause();
       setIsPlaying(false);
     }
   };
 
   return (
     <SoundContext.Provider value={{ playSound, pauseSound, isPlaying }}>
-      {/* Use the imported sound source */}
-      <audio ref={soundRef} loop>
-        <source src={crowdNoise} type="audio/mp3" />
+      {/* Separate audio elements for each sound */}
+      <audio ref={crowdNoiseRef} loop>
+        <source src={crowdNoise} type="audio/mpeg" />
+      </audio>
+      <audio ref={jazzRef} loop>
+        <source src={jazz} type="audio/mpeg" />
       </audio>
       {children}
     </SoundContext.Provider>
