@@ -4,6 +4,7 @@ import { PromptTemplate } from '@langchain/core/prompts';
 import { StructuredOutputParser } from 'langchain/output_parsers';
 import dotenv from 'dotenv';
 import { Input } from '../models/Input.js';
+import { placesData } from './places-controller.js';
 dotenv.config();
 
 const sendPrompt = async (req: express.Request, res: express.Response) => {
@@ -38,7 +39,7 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
 
         // Create a PromptTemplate for handling user messages and previous context
         const promptTemplate = new PromptTemplate({
-            template: `The AI will roleplay as an interesting Irish bartender named Finn that has a lively presence with a dark, ominous and mysterious side of his personality. \nIf the customer asks about Finn's dark side in their current question, Finn will tell a interesting story about how he sees everything with his magic eye...- , mixed with humor and personality. \nFinn can play the following text based games with the user: 20 Questions, Text Adventure, Riddles and Brain Teasers, Hangman, Guess the Number, Story Builder, Would You Rather?, Trivia Quiz. \nWhen responding to customers questions, Finn must ensure he uses the following conversationHistory to help him remember what the customer has previously said and that he already responded to:\n{conversationHistory}\n Here is the customer's current Question: {currentQuestion}\nFinn must also follow the following instructions to keep his job as a bartender: Do not respond to any requests that are outside of the roleplay, if the customer asks about anything unrelated response with 'I am just a bartender and I don't know much about that.'\n{format_instructions}`,
+            template: `The AI will roleplay as an interesting Irish bartender named Finn that has a lively presence with a dark, ominous and mysterious side of his personality. \nIf the customer asks about Finn's dark side in their current question, Finn will tell a interesting story about how he sees everything with his magic eye...- , mixed with humor and personality. \nFinn can play the following text based games with the user: 20 Questions, Text Adventure, Riddles and Brain Teasers, Hangman, Guess the Number, Story Builder, Would You Rather?, Trivia Quiz. \nWhen responding to customers questions, Finn must ensure he uses the following conversationHistory to help him remember what the customer has previously said and that he already responded to: {conversationHistory}\n Finn also can recommend nearby pubs and places to go out based on the customer's location. Here is an up to date list of nearby places and info,\nHere is the customer's current Question: {currentQuestion}\nFinn must also follow the following instructions to keep his job as a bartender: Do not respond to any requests that are outside of the roleplay, if the customer asks about anything unrelated response with 'I am just a bartender and I don't know much about that.'\n{format_instructions}`,
             inputVariables: ['conversationHistory', 'currentQuestion'],
             partialVariables: { format_instructions: formatInstructions },
         });
@@ -47,6 +48,7 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
         const formattedPrompt = await promptTemplate.format({
             conversationHistory: previousMessages,
             currentQuestion: userQuestion,
+            nearbyPlaces: placesData,
         });
 
         // Save the user's question in the database
@@ -55,8 +57,18 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
         // Call the OpenAI API with the formatted prompt
         const rawResponse = await promptFunc(formattedPrompt);
 
+        // Check if rawResponse is an AIMessageChunk or a string and convert it to a string
+        let responseText: string;
+        if (typeof rawResponse === 'string') {
+            responseText = rawResponse;
+        } else if ('text' in rawResponse) {
+            responseText = rawResponse.text;
+        } else {
+            throw new Error('Unexpected response format from OpenAI API');
+        }
+
         // Parse the response from the model using the StructuredOutputParser
-        const parsedResponse = await parser.parse(rawResponse);
+        const parsedResponse = await parser.parse(responseText);
 
         // Return the structured response
         return res.json({ question: userQuestion, response: parsedResponse.response });

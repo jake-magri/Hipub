@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import dotenv from 'dotenv';
 dotenv.config();
 
+let placesData: string = "Finn doesn't have the customer's location. In Finn's response, ask for the location by either telling Finn in the chat or pressing the 'share locatioon' button and asking again.";
 
 export const getNearbyBars = async (req: Request, res: Response) => {
   const { latitude, longitude } = req.body;
@@ -20,11 +21,17 @@ export const getNearbyBars = async (req: Request, res: Response) => {
       `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=bar&key=${apiKey}`
     );
 
-    console.log("This is the ", response.data);
-    // Send the data from Google Places API back to the frontend
-    return res.json(response.data);
+    // save data from Places API to a global variable for export
+    console.log("This is the response from Google Places API:", response.data);
+    placesData = JSON.stringify(response.data);
+    console.log('placesData after assignment:', placesData); 
+
+    // Send the data from Places API back to the frontend
+    return res.status(200);
   } catch (error) {
     console.error("Error fetching nearby bars:", error);
     return res.status(500).json({ error: "Failed to fetch nearby bars" });
   }
 };
+
+export {placesData};
