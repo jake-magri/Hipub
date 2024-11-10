@@ -18,8 +18,8 @@ const askQuestion = async (question:string) => {
       throw new Error('Invalid user API response, check network tab!');
     }
     // drill into object and get property
-    console.log('this'+JSON.stringify(data.response.kwargs.lc_kwargs.lc_kwargs.content));
-    return data.response.kwargs.lc_kwargs.lc_kwargs.content;
+    console.log('this'+JSON.stringify(data.response));
+    return data.response;
 
   } catch (err) { 
     console.log('Error from data retrieval:', err);
