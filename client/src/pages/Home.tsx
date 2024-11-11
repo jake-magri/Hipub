@@ -8,6 +8,7 @@ import Places from "../components/Places";
 import { useSound } from "../components/SoundProvider";
 import Animated from "../components/Animated";
 import arrow from "../assets/arrow.gif";
+import hipub from "../assets/logo.png";
 
 const Home = () => {
   const [error, setError] = useState(false);
@@ -68,11 +69,12 @@ const Home = () => {
       {!loginCheck ? (
         <div className="login-notice">
           <img className="eye" src={HomeImg} />
+          <img className="hipub-logo" src={hipub} />
           <h1
             className={isVisible ? "fade-in" : ""}
             onAnimationEnd={handleAnimationEnd} // Listen for when the animation ends
           >
-            Log in to speak with Finn
+            Welcome to <span>Hipub</span>. Log in to speak with Finn
           </h1>
 
           {showSecondText && <h3 className="fade-in">He's been waiting</h3>}

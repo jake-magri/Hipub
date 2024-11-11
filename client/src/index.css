@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -14,7 +13,6 @@ body {
   font-family: Arial, sans-serif;
   color: #e2c792;
 }
-
 
 .form-container {
   width: 340px;
@@ -32,7 +30,6 @@ body {
   font-size: 1.8em;
 }
 
-
 .form-group {
   margin-bottom: 20px;
   text-align: left;
@@ -44,7 +41,6 @@ body {
   color: #8fc29b;
   font-size: 0.9em;
 }
-
 
 .form-input {
   width: 100%;
@@ -61,7 +57,6 @@ body {
 .form-input:focus {
   border-color: #8fc29b;
 }
-
 
 .form-button {
   width: 100%;
@@ -89,9 +84,8 @@ body {
   height: 100vh;
   padding-top: 20px;
   background-color: #2e2d2b;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
 }
-
 
 .button-container {
   display: flex;
@@ -146,28 +140,28 @@ body {
 }
 
 .fade-in {
-    animation: fadeIn 5s ease-in-out forwards;
-    margin: 5px;
+  animation: fadeIn 5s ease-in-out forwards;
+  margin: 5px;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .main-container {
-  background-image: url('./assets/bar-background.png');
+  background-image: url("./assets/bar-background.png");
   background-size: cover;
-  padding:  22rem 35rem;
+  padding: 22rem 35rem;
   background-position: center;
-  position:relative;
+  position: relative;
 }
 
-.chat-box{
+.chat-box {
   max-width: 30%;
   position: absolute;
   top: 250px;
@@ -207,7 +201,7 @@ body {
   background-color: #405c34;
   color: #c4bfb4;
   z-index: 1;
-  border: 2px solid #686666
+  border: 2px solid #686666;
 }
 
 .exit:hover {
@@ -222,6 +216,28 @@ body {
   z-index: 2;
 }
 
+.location-design {
+  position: relative;
+  text-align: center;
+  align-content: center;
+  align-self: center;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  padding: 10px 24px;
+  border-radius: 45px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.location-design:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
 .sound {
   position: relative;
   top: 150px;
@@ -232,17 +248,17 @@ body {
   cursor: pointer;
 }
 
-.prompt-box{
+.prompt-box {
   position: relative;
   top: 240px;
   text-align: center;
   align-content: center;
   align-self: center;
 }
-.submit-button{
+.submit-button {
   position: relative;
   top: 180px;
-  left: 200PX;
+  left: 200px;
   text-align: center;
   align-content: center;
   align-self: center;
@@ -259,7 +275,7 @@ body {
 .submit-button:hover {
   background-color: #0056b3;
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .submit-button:active {
@@ -325,4 +341,71 @@ body {
   left: 10px;
   transform-origin: center;
   transform: rotate(280deg);
+}
+
+span {
+  color: #186d2c;
+}
+
+.hipub-logo {
+  width: 100px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 20px;
+  left: 30px;
+}
+
+.center {
+  text-align: center;
+  padding: 20px;
+}
+
+.photo-container {
+  width: 225px;
+  height: 225px;
+  object-fit: cover;
+  border-radius: 25%;
+}
+
+.people {
+  flex: 1;
+  max-width: 300px;
+  margin: 10px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.team-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+#aboutHeader {
+  padding-top: 200px;
+}
+
+.about-text {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 10px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.other-work ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.other-work li {
+  display: inline;
+  margin-right: 10px;
+  margin-top: 20px;
+}
+
+.other-work h3 {
+  margin-bottom: 15px;
 }
