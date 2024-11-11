@@ -359,7 +359,8 @@ span {
 
 .center {
   text-align: center;
-  padding: 20px;
+  padding: 25px 0 0 0;
+
 }
 
 .photo-container {
@@ -384,15 +385,28 @@ span {
   flex-wrap: wrap;
 }
 #aboutHeader {
-  padding-top: 200px;
+  padding-top: 400px;
+  padding-bottom: 30px;
 }
 
+#meet-team {
+  padding-top: 100px;
+  padding-bottom: 20px;
+}
 .about-text {
   max-width: 600px;
   margin: 0 auto;
   margin-top: 10px;
   line-height: 1.6;
-  text-align: center;
+  text-align: justify;
+}
+
+.text-align {
+  text-align: justify;
+}
+
+.botton-padding {
+  padding-bottom: 10px;
 }
 
 .other-work ul {
@@ -408,4 +422,8 @@ span {
 
 .other-work h3 {
   margin-bottom: 15px;
+}
+
+.other-work {
+  padding-top: 50px;
 }

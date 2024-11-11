@@ -12,21 +12,18 @@ const About = () => {
         About<span> Hipub</span>
       </h1>
       <p className="about-text">
-        We developed Hipub with the idea of bringing people together who are
-        looking for ideas on nightlife and fun bars in their area. Instead of
-        sorting through countless reviews on Google, we thought of Finn, a more
-        interactive way to find out about great places to go.
+      We created Hipub to bring people together by helping them discover exciting nightlife and unique bars in their area. Instead of wading through endless reviews online, we designed Finn—an interactive AI guide—to recommend spots tailored to your preferences. With Finn, finding the perfect place becomes easy and engaging, as it offers personalized suggestions that fit your style, making nights out more spontaneous and fun.
       </p>
-      <h2 className="center">Meet the Team</h2>
+      <h2 className="center" id="meet-team">Meet the Team</h2>
       <div className="team-container">
         <div className="people">
-          <h3 className="center">Jake Magri</h3>
+          <h3 className="center botton-padding">Jake Magri</h3>
           <img
             src="/pictures/jaketop.png"
             alt="AI image of Jake in a goofy top hat"
             className="photo-container"
           />
-          <p className="center">
+          <p className="center text-align">
             Jake is the brains behind Finn's interactions. He worked extensively
             with the APIs to get Finn to respond in a unique and engaging way.
             Jake is also an invaluebale asset when it comes to fixing Finn's
@@ -34,26 +31,26 @@ const About = () => {
           </p>
         </div>
         <div className="people">
-          <h3 className="center">Parsa McMoody</h3>
+          <h3 className="center botton-padding">Parsa McMoody</h3>
           <img
             src="/pictures/parsabeer.png"
             alt="AI image of Parsa with a green hat and beer"
             className="photo-container"
           />
-          <p className="center">
+          <p className="center text-align">
             Parsa created the idea of Finn and the Hipub project. His design
             work can be seen through out the site: from Finn's all-seeing eye to
             the inviting bar atmosphere and much much more!
           </p>
         </div>
         <div className="people">
-          <h3 className="center">Brendan Murfield</h3>
+          <h3 className="center botton-padding">Brendan Murfield</h3>
           <img
             src="/pictures/brendansmoke.png"
             alt="AI image of brendan in a bowtie with cigar"
             className="photo-container"
           />
-          <p className="center">
+          <p className="center text-align">
             Brendan is a coding newcomer and new member of the team. He worked
             with the Places API to help Finn get the info give solid advice on
             where you should get a drink. He also helped with the sound design
@@ -62,7 +59,7 @@ const About = () => {
         </div>
       </div>
       <div>
-        <div className="center other-work">
+        <div className="center other-work botton-padding">
           <h3>Check out our other work</h3>
           <ul>
             <li>
@@ -90,6 +87,8 @@ const About = () => {
               </button>
             </li>
           </ul>
+          <br/>
+          <h5>&copy; Hipub 2024. All Rights Reserved.</h5>
         </div>
       </div>
     </div>
