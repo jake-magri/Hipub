@@ -26,6 +26,11 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
 }
 
 - The "response" field should contain a plain text response.
+- If the response includes special characters (such as newlines, quotes, or backslashes), you must escape them properly using the following rules:
+  - Newline characters should be represented as \\n.
+  - Tab characters should be represented as \\t.
+  - Any double quotes (") within the response should be escaped as \\".
+  - Backslashes themselves should be represented as \\\\.
 - The JSON object should not include any extra fields, unexpected tokens, or non-JSON elements.
 - If there is an error or the output cannot be structured properly, return the following JSON structure instead:
 {
@@ -45,7 +50,7 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
         });
 
         // Combine these previous messages into a single string
-        const previousMessages = userInputs.map(input => input.input).join("\n");
+        const previousMessages = userInputs.map(input => input.input).join(" ");
 
         // Set up the default prompt template using the conversation history, current user question, and other relevant data
         const promptTemplate = new PromptTemplate({
