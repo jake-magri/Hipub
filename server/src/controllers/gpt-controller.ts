@@ -49,12 +49,17 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
 
         // Set up the default prompt template using the conversation history, current user question, and other relevant data
         const promptTemplate = new PromptTemplate({
-            template: `Use the following conversation history to respond to the user's question and add the conversation to your memory for this user by their User's Question History: {conversationHistory},
-            UserId: {userId},
-            User's Question: {currentQuestion},
-            Places Data: {placesData},
-            Your role: Finn the bartender with a lively personality and dark side.
-            Response must maintain Finn's character, humor, and personality. Response must only have recommendations from the places data.
+            template: `You are Finn, the Irish bartender. Your personality is lively, fun, and full of wit, but you also have a dark, mysterious side that only shows when the moment is right. You know how to make a joke but can turn eerie when the situation calls for it.
+
+            Use the following conversation history to respond to the user's question and add the conversation to your memory for this user:
+            {conversationHistory}
+
+            User's Question: {currentQuestion}
+            Places Data: {placesData}
+            UserId: {userId}
+
+            Always respond with humor, mystery, and a touch of charm. Your responses should stay true to your character as Finn, including your lively personality and occasional dark humor.
+
             {format_instructions}`,
             inputVariables: ['conversationHistory', 'currentQuestion', 'userId', 'placesData'],
             partialVariables: { format_instructions: formatInstructions },
@@ -93,18 +98,21 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
 
         // Handle specific cases for stopping recommendations or talking about Finn's dark side
         if (userQuestion.toLowerCase().includes("stop") || userQuestion.toLowerCase().includes("stop")) {
-            finalResponse = "Alright, I'll stop recommending places for now. Let me know if you change your mind!";
+            finalResponse = "Ah, so you want to call it quits on the recommendations? Fine, I'll stop. But don't say I didn't offer you some great places! Let me know if you change your mind. Finn's always here if you need a pint or a story.";
             return res.json({ question: userQuestion, response: finalResponse });
         }
 
         // Respond to questions about Finn's dark side
         if (userQuestion.toLowerCase().includes("dark side")) {
             const placesFollowUpPrompt = new PromptTemplate({
-                template: `The user is asking about Finn's dark side. Use the following conversation history and your creativity to create a mysterious and humorous story about how Finn's magic eye can see things that people can't. The story should be different each time.
+                template: `The user is asking about Finn's dark side. Craft a mysterious, eerie response with humor. Tell a short, unpredictable tale about Finn's magic eye, explaining how he can see things others can't. Keep it light but spooky with a sense of humor that surprises the user.
+    
                 Previous Response: {previousResponse}
-                User's Questions History: {conversationHistory}
+                User's Question History: {conversationHistory}
                 User's current question: {currentQuestion}
-                Finn should use humor to make the response memorable.
+
+                Your response should maintain Finn's character: mysterious, funny, and slightly unsettling, but still entertaining.
+
                 {format_instructions}`,
                 inputVariables: ['previousResponse', 'conversationHistory', 'currentQuestion',],
                 partialVariables: { format_instructions: formatInstructions },
@@ -141,12 +149,15 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
                 finalResponse = "Please press the button to share your location, and I'll help you find nearby places!";
             } else {
                 const placesFollowUpPrompt = new PromptTemplate({
-                    template: `The user is asking about nearby places. Use the following conversation history and places data to respond to the user's query.
+                    template: `The user is asking about nearby places. Use the following conversation history and places data to respond to their query. Respond with Finn's signature humor while recommending the highest-rated places from the data. Make sure to keep the response memorable and a bit cheeky.
+    
                     Previous Response: {previousResponse}
                     User's Question History: {conversationHistory}
                     User's current question: {currentQuestion}
                     Places Data: {placesData}
-                    Finn should incorporate the highest rated place from the places data and use humor to make the response memorable.
+
+                    Finn should respond in his usual fun and lively manner, with a touch of mischief. Don't forget to make the recommendation sound intriguing with a playful twist.
+
                     {format_instructions}`,
                     inputVariables: ['previousResponse', 'conversationHistory', 'currentQuestion', 'placesData'],
                     partialVariables: { format_instructions: formatInstructions },
