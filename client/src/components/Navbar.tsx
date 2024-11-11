@@ -47,7 +47,7 @@ const Navbar = () => {
               setLoginCheck(false); // Update state on logout
             }}
           >
-            Exit
+            EXIT
           </button>
         )}
       </div>

@@ -1,10 +1,12 @@
-import React from "react";
+import Animation from '../components/Animated';
 
 const About = () => {
-  const handleLinkClick = (url: any) => {
+  const handleLinkClick = (url: string) => {
     window.open(url, "_blank", "noopener,noreferrer");
   };
   return (
+    <>
+    <Animation>
     <div className="center">
       <h1 id="aboutHeader">
         About<span> Hipub</span>
@@ -91,6 +93,8 @@ const About = () => {
         </div>
       </div>
     </div>
+    </Animation>
+    </>
   );
 };
 

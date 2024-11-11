@@ -187,11 +187,11 @@ body {
 }
 
 .exit {
-  padding: 17px 13px;
+  padding: 19px 11px;
   font-size: 16px;
   font-weight: bold;
   border: none;
-  border-radius: 45px;
+  border-radius: 65px;
   cursor: pointer;
   transition: all 0.4s ease;
   position: relative;
