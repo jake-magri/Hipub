@@ -403,14 +403,9 @@ span {
 .other-work li {
   display: inline;
   margin-right: 10px;
+  margin-top: 20px;
 }
 
-.other-work a {
-  text-decoration: none;
-  color: #186d2c; 
+.other-work h3 {
+  margin-bottom: 15px;
 }
-
-.other-work a:hover {
-  text-decoration: underline;
-}
-
