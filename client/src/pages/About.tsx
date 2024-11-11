@@ -1,6 +1,9 @@
 import React from "react";
 
 const About = () => {
+  const handleLinkClick = (url: any) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
   return (
     <div className="center">
       <h1 id="aboutHeader">
@@ -58,34 +61,31 @@ const About = () => {
       </div>
       <div>
         <div className="center other-work">
-          <h3>Check out our other work:</h3>
+          <h3>Check out our other work</h3>
           <ul>
             <li>
-              <a
-                href="https://github.com/jake-magri"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => handleLinkClick("https://github.com/jake-magri")}
+                className="button"
               >
                 Jake Magri
-              </a>
+              </button>
             </li>
             <li>
-              <a
-                href="https://github.com/parsamh8"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => handleLinkClick("https://github.com/parsamh8")}
+                className="button"
               >
                 Parsa McMoody
-              </a>
+              </button>
             </li>
             <li>
-              <a
-                href="https://github.com/bmurfield"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => handleLinkClick("https://github.com/bmurfield")}
+                className="button"
               >
                 Brendan Murfield
-              </a>
+              </button>
             </li>
           </ul>
         </div>

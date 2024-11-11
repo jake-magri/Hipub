@@ -33,9 +33,11 @@ const Navbar = () => {
             <Link to="/login">Log In</Link>
           </button>
         )}
+        {!loginCheck && (
         <button className="button">
           <Link to="./about">About Us</Link>
         </button>
+        )}
         {/* Show Logout button when logged in */}
         {loginCheck && (
           <button
