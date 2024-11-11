@@ -9,7 +9,7 @@ let model: ChatOpenAI;
 
 if (apiKey) {
     // Initialize the OpenAI model if the API key is provided
-    model = new ChatOpenAI({ temperature: 0, openAIApiKey: apiKey, modelName: 'gpt-3.5-turbo' });
+    model = new ChatOpenAI({ temperature: 0, openAIApiKey: apiKey, modelName: 'chatgpt-4o-latest' });
 }
 else {
     console.error('OPENAI_API_KEY is not configured.');
