@@ -1,6 +1,6 @@
-// import React from 'react'
+import { PlacesProps } from "../interfaces/PlaceProps";
 
-const Places = () => {
+const Places = ({ setPlacesData }: PlacesProps) => {
 function geolocation(){
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
@@ -29,15 +29,18 @@ function getLocation (latitude:number, longitude:number){
   body: JSON.stringify({ latitude, longitude}), 
 })
   .then(response => response.json())
-  .then(data => console.log(data))
+  .then(data => {
+    // console.log(data);
+    setPlacesData(data); // Pass the places data to the parent
+  })
   .catch(error => console.error('Error:', error));
 }
 
   return (
-    <button onClick={geolocation} className="form-button" type='submit'>
+    <button onClick={geolocation} className="form-button" type='button'>
        Go on, scout out a proper place for a pint! 🍺
     </button>
   )
 }
 
-export default Places
+export default Places;

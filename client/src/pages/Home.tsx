@@ -16,6 +16,7 @@ const Home = () => {
   const [showSecondText, setShowSecondText] = useState(false);
   const [response, setResponse] = useState("");
   const [prompt, setPrompt] = useState("");
+  const [placesData, setPlacesData] = useState("The places list data was not provided.");
 
   const { playSound, pauseSound, isPlaying } = useSound();
 
@@ -39,13 +40,13 @@ const Home = () => {
     setShowSecondText(true);
   };
 
-  // Handle form submission for login
+  // Handle form submission for Finn
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const data = await askQuestion(prompt);
+      const data = await askQuestion(prompt, placesData);
       setResponse(data);
-      console.log(`client api response: ${JSON.stringify(data, null, 2)}`);
+      // console.log(`client api response: ${JSON.stringify(data, null, 2)}`);
       playSound();
     } catch (err) {
       console.error("Failed to execute on line 48 home.tsx", err); // Log any errors that occur during login
@@ -116,7 +117,7 @@ const Home = () => {
                 </div>
               </form>
               <div className="location-box">
-                <Places />
+                <Places setPlacesData={setPlacesData}/>
               </div>
               <div>
                 <img className="arrow" src={arrow}/>

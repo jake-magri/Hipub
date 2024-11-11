@@ -4,62 +4,68 @@ import { PromptTemplate } from '@langchain/core/prompts';
 import { StructuredOutputParser } from 'langchain/output_parsers';
 import dotenv from 'dotenv';
 import { Input } from '../models/Input.js';
-import { placesData } from './places-controller.js';
 dotenv.config();
 
 const sendPrompt = async (req: express.Request, res: express.Response) => {
     const userQuestion = req.body.question;
+    const placesData: string = req.body.placesData || "The places list data was not provided.";
 
     if (!userQuestion) {
         return res.status(400).json({ question: null, response: 'Please provide a question in the request body.' });
     }
 
-    // Check if req.user is undefined or not
     if (!req.user) {
         return res.status(401).json({ response: 'Unauthorized, user not found.' });
     }
 
-    console.log(req.user);
+    const formatInstructions = `You must always return valid JSON in the following format:
+{
+  "response": "Your response here"
+}
+
+- The "response" field should contain a plain text response.
+- The JSON object should not include any extra fields, unexpected tokens, or non-JSON elements.
+- If there is an error or the output cannot be structured properly, return the following JSON structure instead:
+{
+  "error": "Your error message here"
+}
+- Do not include anything else outside of the JSON object, such as plain text or additional formatting.
+
+Please ensure that the JSON structure is always correct and valid, with no additional characters, newlines, or other non-JSON elements.`;
+
+    // console.log(req.user);
     const reqUser = req.user.user;
 
     try {
-        // Fetch all previous messages for the user (userId = reqUser)
-        const userInputs = await Input.findAll({ where: { UserId: reqUser } });
-
-        // Extract the message content for the Langchain prompt
+        const userInputs = await Input.findAll({ 
+            where: { UserId: reqUser },
+            order: [['createdAt', 'DESC']], // order by most recent
+            limit: 20 // fetch only last 20
+         });
         const previousMessages = userInputs.map(input => input.input).join("\n");
 
-        // Set up a StructuredOutputParser for the expected response structure
-        const parser = StructuredOutputParser.fromNamesAndDescriptions({
-            response: "Finn's response.",
-        });
-
-        // Generate format instructions for the model
-        const formatInstructions = parser.getFormatInstructions();
-
-        // Create a PromptTemplate for handling user messages and previous context
         const promptTemplate = new PromptTemplate({
-            template: `The AI will roleplay as an interesting Irish bartender named Finn that has a lively presence with a dark, ominous and mysterious side of his personality. \nIf the customer asks about Finn's dark side in their current question, Finn will tell a interesting story about how he sees everything with his magic eye, mixed with humor and personality. \nFinn can play the following text based games with the user: 20 Questions, Text Adventure, Riddles and Brain Teasers, Hangman, Guess the Number, Story Builder, Would You Rather?, Trivia Quiz. \nWhen responding to customers questions, Finn must ensure he uses the following conversation history to help him remember what the customer has previously said: {conversationHistory}. \nFinn also can recommend nearby pubs and places to go out based on the customer's location. Here is an up to date list of nearby places and info: {nearbyPlaces}. Your response should be casually and warmly worded that picks out the top 5 places with the highest ratings, weaving the place name, address, and rating into the response. Do not make up any locations!\nHere is the customer's current Question: {currentQuestion}. \nFinn must also follow the following instructions to keep his job as a bartender: Do not respond to any requests that are outside of the roleplay, if the customer asks about anything unrelated respond with 'I am just a bartender and I don't know much about that.'\n{format_instructions}.`,
-            inputVariables: ['conversationHistory', 'currentQuestion', 'nearbyPlaces'],
+            template: `Use the following conversation history to respond to the user's question and add the conversation to your memory for this userId: {conversationHistory}
+            UserId: {userId}
+            User's Question: {currentQuestion}
+            Your role: Finn the bartender with a lively personality and dark side.
+            Response must maintain Finn's character, humor, and personality.
+            If asked about Finn's darkside, tell a dark and humorous story about Finn's magical eye that sees all.
+            {format_instructions}`,
+            inputVariables: ['conversationHistory', 'currentQuestion', 'userId'],
             partialVariables: { format_instructions: formatInstructions },
         });
 
-        // Format the prompt using the conversation history and the user's new question
         const formattedPrompt = await promptTemplate.format({
             conversationHistory: previousMessages,
             currentQuestion: userQuestion,
-            nearbyPlaces: placesData,
+            userId: reqUser
         });
 
-        // Save the user's question in the database
         await Input.create({ input: userQuestion, UserId: reqUser });
 
-        console.log('This is the formattedPrompt: ',formattedPrompt)
-
-        // Call the OpenAI API with the formatted prompt
         const rawResponse = await promptFunc(formattedPrompt);
 
-        // Check if rawResponse is an AIMessageChunk or a string and convert it to a string
         let responseText: string;
         if (typeof rawResponse === 'string') {
             responseText = rawResponse;
@@ -69,17 +75,100 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
             throw new Error('Unexpected response format from OpenAI API');
         }
 
-        // Parse the response from the model using the StructuredOutputParser
+        const parser = StructuredOutputParser.fromNamesAndDescriptions({
+            response: "Finn's response.",
+        });
         const parsedResponse = await parser.parse(responseText);
+        let finalResponse = parsedResponse.response;
 
-        // Return the structured response
-        return res.json({ question: userQuestion, response: parsedResponse.response });
-    } catch (error) {
-        if (error instanceof Error) {
-            console.error('Error:', error.message);
+        if (finalResponse.includes("game")) {
+            // If the AI suggests a game, trigger another prompt for game setup
+            const followUpPrompt = new PromptTemplate({
+                template: `The user wants to play a game. Use the following history to set up the game response.
+
+                Finn can play the following text based games with the user: 20 Questions, Text Adventure, Riddles and Brain Teasers, Hangman, Guess the Number, Story Builder, Would You Rather?, Trivia Quiz and will offer to start a randomly selected game.
+
+                Previous Response: {previousResponse}
+                Conversation History: {conversationHistory}
+                User's current question: {currentQuestion}
+
+                Prepare Finn to guide the user through the game. Finn should use humor and be engaging.
+                {format_instructions}`,
+                inputVariables: ['previousResponse', 'conversationHistory', 'currentQuestion'],
+                partialVariables: { format_instructions: formatInstructions },
+            });
+
+            // Format the follow-up prompt
+            const followUpFormattedPrompt = await followUpPrompt.format({
+                previousResponse: finalResponse,
+                conversationHistory: previousMessages,
+                currentQuestion: userQuestion,
+            });
+
+            // Call the AI with the follow-up prompt
+            const followUpResponse = await promptFunc(followUpFormattedPrompt);
+
+            // Parse and send the follow-up response back to the user
+            let followUpText: string;
+            if (typeof followUpResponse === 'string') {
+                followUpText = followUpResponse;
+            } else if ('text' in followUpResponse) {
+                followUpText = followUpResponse.text;
+            } else {
+                throw new Error('Unexpected response format from OpenAI API');
+            }
+
+            const followUpParsedResponse = await parser.parse(followUpText);
+            finalResponse = followUpParsedResponse.response;
         }
+
+
+        // Check if the user is asking about nearby places
+        if (userQuestion.toLowerCase().includes("nearby") || userQuestion.toLowerCase().includes("bars") || userQuestion.toLowerCase().includes("restaurants")) {
+            if (placesData === "The places list data was not provided.") {
+                finalResponse = "Please press the button to share your location, and I'll help you find nearby places!";
+            } else {
+                const placesFollowUpPrompt = new PromptTemplate({
+                    template: `The user is asking about nearby places. Use the following conversation history and places data to respond to the user's query.
+                    Previous Response: {previousResponse}
+                    Conversation History: {conversationHistory}
+                    User's current question: {currentQuestion}
+                    Places Data: {placesData}
+                    Prepare Finn to guide the user to nearby places in a fun, engaging, and humorous way. Finn should incorporate the highest rated place from the places data and use humor to make the response memorable.
+                    {format_instructions}`,
+                    inputVariables: ['previousResponse', 'conversationHistory', 'currentQuestion', 'placesData'],
+                    partialVariables: { format_instructions: formatInstructions},
+                });
+
+                const placesFollowUpFormattedPrompt = await placesFollowUpPrompt.format({
+                    previousResponse: finalResponse,
+                    conversationHistory: previousMessages,
+                    currentQuestion: userQuestion,
+                    placesData: placesData,
+                });
+
+                const placesFollowUpResponse = await promptFunc(placesFollowUpFormattedPrompt);
+
+                let placesFollowUpText: string;
+                if (typeof placesFollowUpResponse === 'string') {
+                    placesFollowUpText = placesFollowUpResponse;
+                } else if ('text' in placesFollowUpResponse) {
+                    placesFollowUpText = placesFollowUpResponse.text;
+                } else {
+                    throw new Error('Unexpected response format from OpenAI API');
+                }
+
+                const placesFollowUpParsedResponse = await parser.parse(placesFollowUpText);
+                finalResponse = placesFollowUpParsedResponse.response;
+            }
+        }
+
+        return res.json({ question: userQuestion, response: finalResponse });
+    } catch (error) {
+        console.error('Error:', error);
         return res.status(500).json({ question: userQuestion, response: 'Internal Server Error' });
     }
 };
+
 
 export default sendPrompt;
