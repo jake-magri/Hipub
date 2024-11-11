@@ -103,7 +103,7 @@ const sendPrompt = async (req: express.Request, res: express.Response) => {
         }
 
         // Respond to questions about Finn's dark side
-        if (userQuestion.toLowerCase().includes("dark side")) {
+        if (userQuestion.toLowerCase().includes("dark side") || userQuestion.toLowerCase().includes("magic eye")) {
             const placesFollowUpPrompt = new PromptTemplate({
                 template: `The user is asking about Finn's dark side. Craft a mysterious, eerie response with humor. Tell a short, unpredictable tale about Finn's magic eye, explaining how he can see things others can't. Keep it light but spooky with a sense of humor that surprises the user.
     
