@@ -88,7 +88,7 @@ const About = () => {
             </li>
           </ul>
           <br/>
-          <h5>&copy; Hipub 2024. All Rights Reserved.</h5>
+          <h5 id="trans">&copy; Hipub 2024. All Rights Reserved.</h5>
         </div>
       </div>
     </div>

@@ -197,7 +197,6 @@ body {
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #1b1607, #dc1414);
-
   background-color: #405c34;
   color: #c4bfb4;
   z-index: 1;
@@ -255,6 +254,7 @@ body {
   align-content: center;
   align-self: center;
 }
+
 .submit-button {
   position: relative;
   top: 180px;
@@ -272,6 +272,7 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
+
 .submit-button:hover {
   background-color: #0056b3;
   transform: translateY(-2px);
@@ -311,8 +312,8 @@ body {
 }
 
 .styled-input {
-  width: 100%; /* Takes up the full width of the parent container */
-  max-width: 500px; /* Optional: sets a max width to avoid being too wide on large screens */
+  width: 100%;
+  max-width: 500px;
   padding: 10px;
   font-size: 16px;
   color: #333;
@@ -384,6 +385,7 @@ span {
   gap: 20px;
   flex-wrap: wrap;
 }
+
 #aboutHeader {
   padding-top: 400px;
   padding-bottom: 30px;
@@ -426,4 +428,8 @@ span {
 
 .other-work {
   padding-top: 50px;
+}
+
+#trans {
+color: #e2c79291;
 }
