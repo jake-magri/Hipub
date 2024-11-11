@@ -187,17 +187,16 @@ body {
 }
 
 .exit {
-  padding: 17px 13px;
+  padding: 19px 11px;
   font-size: 16px;
   font-weight: bold;
   border: none;
-  border-radius: 45px;
+  border-radius: 65px;
   cursor: pointer;
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #1b1607, #dc1414);
-
   background-color: #405c34;
   color: #c4bfb4;
   z-index: 1;
@@ -255,6 +254,7 @@ body {
   align-content: center;
   align-self: center;
 }
+
 .submit-button {
   position: relative;
   top: 180px;
@@ -272,6 +272,7 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
+
 .submit-button:hover {
   background-color: #0056b3;
   transform: translateY(-2px);
@@ -311,8 +312,8 @@ body {
 }
 
 .styled-input {
-  width: 100%; /* Takes up the full width of the parent container */
-  max-width: 500px; /* Optional: sets a max width to avoid being too wide on large screens */
+  width: 100%;
+  max-width: 500px;
   padding: 10px;
   font-size: 16px;
   color: #333;
@@ -359,7 +360,8 @@ span {
 
 .center {
   text-align: center;
-  padding: 20px;
+  padding: 25px 0 0 0;
+
 }
 
 .photo-container {
@@ -383,16 +385,30 @@ span {
   gap: 20px;
   flex-wrap: wrap;
 }
+
 #aboutHeader {
-  padding-top: 200px;
+  padding-top: 400px;
+  padding-bottom: 30px;
 }
 
+#meet-team {
+  padding-top: 100px;
+  padding-bottom: 20px;
+}
 .about-text {
   max-width: 600px;
   margin: 0 auto;
   margin-top: 10px;
   line-height: 1.6;
-  text-align: center;
+  text-align: justify;
+}
+
+.text-align {
+  text-align: justify;
+}
+
+.botton-padding {
+  padding-bottom: 10px;
 }
 
 .other-work ul {
@@ -408,4 +424,12 @@ span {
 
 .other-work h3 {
   margin-bottom: 15px;
+}
+
+.other-work {
+  padding-top: 50px;
+}
+
+#trans {
+color: #e2c79291;
 }
