@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import auth from '../utils/auth';
-
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import auth from "../utils/auth";
 
 const Navbar = () => {
   const [loginCheck, setLoginCheck] = useState<boolean>(false);
@@ -18,35 +17,40 @@ const Navbar = () => {
         {/* Conditionally render buttons based on login status */}
         {!loginCheck && (
           <>
-          <img />
+            <img />
             <button className="button">
-              <Link to='./'>Home</Link>
+              <Link to="./">Home</Link>
             </button>
             <button className="button">
-              <Link to='./signup'>Sign Up</Link>
+              <Link to="./signup">Sign Up</Link>
             </button>
           </>
         )}
-        
+
         {/* Only show Log In button if not logged in */}
         {!loginCheck && (
           <button className="button">
-            <Link to='/login'>Log In</Link>
+            <Link to="/login">Log In</Link>
           </button>
         )}
-
+        <button className="button">
+          <Link to="./about">About Us</Link>
+        </button>
         {/* Show Logout button when logged in */}
         {loginCheck && (
-          <button className="exit" onClick={() => { 
-            auth.logout(); 
-            setLoginCheck(false); // Update state on logout
-          }}>
+          <button
+            className="exit"
+            onClick={() => {
+              auth.logout();
+              setLoginCheck(false); // Update state on logout
+            }}
+          >
             Exit
           </button>
         )}
       </div>
     </div>
   );
-}
+};
 
 export default Navbar;
