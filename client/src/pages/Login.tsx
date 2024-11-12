@@ -11,6 +11,7 @@ const Login = () => {
     username: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Handle changes in the input fields
   const handleChange = (
@@ -31,11 +32,14 @@ const Login = () => {
       const data = await login(loginData);
       // If login is successful, call Auth.login to store the token in localStorage
       Auth.login(data.token);
-      // sends location data when signing in
-      console.log("this is inside the handlesubmit");
+      // Clear any previous error messages
+      setErrorMessage("");
+      console.log('login successful');
+      
       // await geoLocation();
     } catch (err) {
-      console.error("Failed to login", err); // Log any errors that occur during login
+      console.error("Failed to login", err);
+      setErrorMessage("Invalid username or password. Please try again.");
     }
   };
 
@@ -73,6 +77,13 @@ const Login = () => {
                 Login
               </button>
             </div>
+            {/* Display error message */}
+            {errorMessage && (
+              <div className="error-message">
+                <br/>
+                <p>{errorMessage}</p>
+              </div>
+            )}
           </form>
         </div>
       </Animated>
