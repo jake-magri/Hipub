@@ -47,8 +47,6 @@ const Home = () => {
     try {
       const data = await askQuestion(prompt, placesData);
       setResponse(data);
-      // console.log(`client api response: ${JSON.stringify(data, null, 2)}`);
-      playSound();
     } catch (err) {
       console.error("Failed to execute on line 48 home.tsx", err); // Log any errors that occur during login
       setError(true);
