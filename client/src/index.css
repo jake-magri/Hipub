@@ -433,3 +433,13 @@ span {
 #trans {
 color: #e2c79291;
 }
+
+.success-text{
+  font-family: 'Courier New', Courier, monospace;
+  color: #1ba13a;
+}
+
+.error-message {
+  font-family: 'Courier New', Courier, monospace;
+  color: rgb(214, 20, 20);
+}

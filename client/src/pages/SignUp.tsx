@@ -4,6 +4,8 @@ import { UserData } from "../interfaces/UserData";
 
 const SignUp = () => {
   // Manage form data with useState
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [signUpData, setSignUpData] = useState<UserData>({
     username: "",
     email: "",
@@ -32,15 +34,22 @@ const SignUp = () => {
       console.log(response);
 
       if (!response.ok) {
-        throw new Error("Failed to create account");
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || "Failed to create account");
+        setSuccessMessage(''); // Clear success message on error
+        return;
       }
 
       const result = await response.json();
       console.log("Account created:", result);
 
-      // clear the form or provide feedback to the user
-      setSignUpData({ username: "", email: "", password: "" });
+      // Set success message and clear error message
+      setSuccessMessage("Account created successfully!");
+      setErrorMessage('');
+      setSignUpData({ username: "", email: "", password: "" }); // Clear the form
     } catch (error: unknown) {
+      setErrorMessage("An error occurred while creating the account. Please try again.");
+      setSuccessMessage(''); // Clear success message on error
       console.error("Error:", error);
     }
   };
@@ -93,6 +102,18 @@ const SignUp = () => {
             Sign Up
           </button>
         </form>
+        {/* Display success and error messages */}
+        <br/>
+        {successMessage && (
+          <div>
+            <p className="success-text">{successMessage}</p>
+          </div>
+        )}
+        {errorMessage && (
+          <div>
+            <p className="error-text">{errorMessage}</p>
+          </div>
+        )}
       </div>
     </Animated>
   );
