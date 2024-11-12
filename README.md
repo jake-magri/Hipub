@@ -137,6 +137,20 @@ npm run start
 
 [http://localhost:3001/](http://localhost:3001/)
 
+<!-- Usage -->
+
+## Usage
+
+Once a user has created an account, they can engage with Finn the bartender by submitting questions through the on screen form. The Hi Pub application features three core functionalities:
+
+1. Roleplaying Bartender: OpenAI brings Finn the bartender to life, providing engaging, conversational, and character-rich responses with a lively, witty, and occasionally mysterious tone.
+
+2. Personalized Conversations: When a user signs in, Finn recalls their conversation history, incorporating past interactions and preferences into each response. This is achieved by injecting the user’s unique history into the OpenAI prompt, allowing Finn to continue conversations seamlessly.
+
+3. Location-Based Recommendations: After the user clicks the "Share Location" button, Finn uses information from the Places API about nearby pubs, bars, and restaurants to offer personalized nightlife recommendations. This location data enriches Finn’s responses, making them relevant to the user's surroundings and full of playful charm.
+
+By leveraging user input, conversation memory, and location data, Finn delivers a delightful and immersive bartending experience.
+
 <!-- ROADMAP -->
 
 ## Roadmap
