@@ -4,10 +4,11 @@
   <!-- ![Name](urlToShieldHere)(urlToGithubHere) -->
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Contributors](https://img.shields.io/github/contributors/404pandas/project-2-setup-guide.svg?style=plastic&logo=appveyor)](https://github.com/404pandas/project-2-setup-guide/graphs/contributors)
-[![Forks](https://img.shields.io/github/forks/404pandas/project-2-setup-guide.svg?style=plastic&logo=appveyor)](https://github.com/404pandas/project-2-setup-guide/network/members)
-[![Stargazers](https://img.shields.io/github/stars/404pandas/project-2-setup-guide.svg?style=plastic&logo=appveyor)](https://github.com/404pandas/project-2-setup-guide/stargazers)
-[![Issues](https://img.shields.io/github/issues/404pandas/project-2-setup-guide.svg?style=plastic&logo=appveyor)](https://github.com/404pandas/project-2-setup-guide/issues)
+[![Contributors](https://img.shields.io/badge/contributors-3-orange?style=plastic&logo=appveyor
+)](https://github.com/jake-magri/Hipub/graphs/contributors)
+[![Forks](https://img.shields.io/github/forks/404pandas/project-2-setup-guide.svg?style=plastic&logo=appveyor)](https://github.com/jake-magri/Hipub/forks)
+[![Stargazers](https://img.shields.io/badge/stars-1-blue?style=plastic&logo=appveyor)](https://github.com/jake-magri/Hipub/stargazers)
+[![Issues](https://img.shields.io/badge/issues-5%20open-green?style=plastic&logo=appveyor)](https://github.com/jake-magri/Hipub/issues)
 
 </div>
 
@@ -104,6 +105,7 @@ This project was built using Node, Express, Handlebars, PostgreSQL, and Sequeliz
 ## Getting Started
 
 This application will function as a deployed app on Render.
+https://hipub.onrender.com/
 
 ### Local Installation / Testing
 
