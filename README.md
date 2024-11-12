@@ -133,7 +133,7 @@ npm run start
 
 5. Visit app:
 
-[http://localhost:3001/](http://localhost:3001/)
+[https://hipub.onrender.com/](https://hipub.onrender.com/)
 
 <!-- ROADMAP -->
 
